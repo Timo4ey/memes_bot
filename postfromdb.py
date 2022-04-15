@@ -3,17 +3,16 @@ import pandas as pd
 from datetime import datetime, timedelta
 import requests
 import json
-import tqdm
+
+from config import tg_access_token
 
 from time import sleep
 import telegram
-tg_token = {}
 
-with open( 'D:/Job/WorkSpace/MemesDocker/telegram_access_token.json', 'r') as f:
-    tg_token = json.load(f)
+
 
 #telegram_bot_get_me = bot.get_me()
-bot = telegram.Bot(token = tg_token['access_token'])
+bot = telegram.Bot(token = tg_access_token)
 updates = bot.get_updates()
 print(updates)
 

@@ -5,12 +5,10 @@ from psycopg2.extensions import AsIs
 import pandas as pd
 from time import sleep
 from datetime import datetime, timedelta
-import os
+from config import vk_access_token
 
-vk_token = {}
+vk_token = vk_access_token
 
-with open('D:/Job/WorkSpace/MemesDocker/vk_token.json', 'r') as f:
-    vk_token = dict(json.load(f))
 
 def getVkJson(list_of_indexes) -> pd.DataFrame:
     df = pd.DataFrame()

@@ -7,20 +7,19 @@ import pandas as pd
 from time import sleep
 from datetime import datetime, timedelta
 
+from config import db_db_name, db_host, db_password, db_user
 
-db_config = dict()
-with open('D:/Job/WorkSpace/MemesDocker/db_config.json', 'r') as f:
-    db_config = json.load(f)
+
 
 # getting indexes 
 def getIndexesFromMainDB() -> list:
     temp_list = []
     try:
         connection = psycopg2.connect(
-            host = db_config['host'],
-            user = db_config['user'],
-            password = db_config['password'],
-            database = db_config['db_name']
+            host = db_host,
+            user = db_user,
+            password = db_password ,
+            database = db_db_name
             )
         connection.autocommit = True
         with connection.cursor() as cursor:
@@ -42,10 +41,10 @@ def GetDataPostsSQL() -> list:
     temp_list = []
     try:
         connection = psycopg2.connect(
-            host = db_config['host'],
-            user = db_config['user'],
-            password = db_config['password'],
-            database = db_config['db_name']
+            host = db_host,
+            user = db_user,
+            password = db_password,
+            database = db_db_name
         )
         connection.autocommit = True
         with connection.cursor() as cursor:
@@ -67,10 +66,10 @@ def GetDataPostsSQL() -> list:
 def sendDataContentSQL(arr) -> None:
     try:
         connection = psycopg2.connect(
-            host = db_config['host'],
-            user = db_config['user'],
-            password = db_config['password'],
-            database = db_config['db_name']
+            host = db_host,
+            user = db_user,
+            password = db_password,
+            database = db_db_name
         )
         connection.autocommit = True
         with connection.cursor() as cursor:
@@ -99,10 +98,10 @@ def sendDataContentSQL(arr) -> None:
 def sendDataPostsSQL(arr) -> None:
     try:
         connection = psycopg2.connect(
-            host = db_config['host'],
-            user = db_config['user'],
-            password = db_config['password'],
-            database = db_config['db_name']
+            host = db_host,
+            user = db_user,
+            password = db_password,
+            database = db_db_name
         )
         connection.autocommit = True
         with connection.cursor() as cursor:
