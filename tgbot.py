@@ -9,14 +9,12 @@ import telegram
 #--------------------------
 import json
 import requests
-#-----------------------
-tg_token = {}
 
-with open( 'D:/Job/WorkSpace/MemesDocker/telegram_access_token.json', 'r') as f:
-    tg_token = json.load(f)
+from config import tg_access_token, vk_access_token
+#-----------------------
 
 #telegram_bot_get_me = bot.get_me()
-bot = telegram.Bot(token = tg_token['access_token'])
+bot = telegram.Bot(token = tg_access_token)
 try:
     updates = bot.get_updates()
 except Exception as _ex:
@@ -25,10 +23,8 @@ except Exception as _ex:
 
 # Getting token
 
-vk_token = {}
+vk_token = vk_access_token
 
-with open('D:/Job/WorkSpace/MemesDocker/vk_token.json', 'r') as f:
-    vk_token = dict(json.load(f))
 
 
 logging.basicConfig(
@@ -90,7 +86,7 @@ def help_command(update: Update, context: CallbackContext) -> None:
 
 def main()->None:
     """Run the bot"""
-    updater = Updater(tg_token['access_token'])
+    updater = Updater(tg_access_token)
     updater.dispatcher.add_handler(CommandHandler('start', start))
     updater.dispatcher.add_handler(CallbackQueryHandler(buttom))
     updater.dispatcher.add_handler(CommandHandler('help', help_command))
