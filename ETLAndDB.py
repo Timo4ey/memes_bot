@@ -7,9 +7,6 @@ from time import sleep
 from datetime import datetime, timedelta
 from config import vk_access_token
 
-vk_token = vk_access_token
-
-
 def getVkJson(list_of_indexes) -> pd.DataFrame:
     df = pd.DataFrame()
     for x in list_of_indexes:
@@ -18,7 +15,7 @@ def getVkJson(list_of_indexes) -> pd.DataFrame:
         v = '5.131'
         params_wall = {
         'owner_id':x[0]*-1,
-        'access_token':vk_token['access_token'],
+        'access_token':vk_access_token,
         'count': 30,
         'v':v
     }

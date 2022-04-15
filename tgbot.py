@@ -10,7 +10,7 @@ import telegram
 import json
 import requests
 
-from config import tg_access_token, vk_access_token
+from config import tg_access_token
 #-----------------------
 
 #telegram_bot_get_me = bot.get_me()
@@ -23,7 +23,6 @@ except Exception as _ex:
 
 # Getting token
 
-vk_token = vk_access_token
 
 
 
