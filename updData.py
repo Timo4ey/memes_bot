@@ -1,3 +1,4 @@
+from __future__ import print_function
 import json
 import requests
 import psycopg2
@@ -80,6 +81,9 @@ try:
     sendDataPostsSQL(for_post_db)
 except Exception as _ex:
     print("[INFO] You don't have a new data", _ex)
+
+
+
 
 
 

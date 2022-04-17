@@ -48,7 +48,7 @@ def GetDataPostsSQL() -> list:
         )
         connection.autocommit = True
         with connection.cursor() as cursor:
-            get_table_query = """SELECT content_id FROM post_db"""
+            get_table_query = """SELECT content_id FROM content_db"""
             #cursor.execute(get_table_query)
         #temp_df = pd.read_sql(get_table_query, con=connection)
             cursor.execute(get_table_query)
