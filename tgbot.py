@@ -10,7 +10,7 @@ import telegram
 import json
 import requests
 
-from config import tg_access_token, vk_access_token
+from config import tg_access_token
 #-----------------------
 
 #telegram_bot_get_me = bot.get_me()
@@ -23,7 +23,6 @@ except Exception as _ex:
 
 # Getting token
 
-vk_token = vk_access_token
 
 
 
@@ -69,7 +68,7 @@ def buttom(update: Update, context:CallbackContext) -> None:
          #   getting_image = requests.get(item[0])
          #   bot.send_photo(photo=getting_image.content,  chat_id=update.effective_chat.id, caption=item[1])
     elif query.data == 'Upd_Db':
-        #exec('updData')
+        exec('updData')
         
         query.edit_message_text(text="Data's updating, repeat your requests in a few minutes")
     else:

@@ -16,10 +16,7 @@ bot = telegram.Bot(token = tg_access_token)
 updates = bot.get_updates()
 print(updates)
 
-host = '127.0.0.1'
-user = 'postgres'
-password = 'Bedema99$$'
-db_name = 'My'
+from config import db_db_name, db_host, db_password, db_user
 
 
 
@@ -28,10 +25,10 @@ def MemesForHoursDB(hours = 6):
     certain_time = datetime.strftime((datetime.today() - timedelta(hours=hours)), '%Y-%m-%d %H:%M:%S')
     try:
         connection = psycopg2.connect(
-            host = host,
-            user = user,
-            password = password,
-            database = db_name
+            host = db_host,
+            user = db_user,
+            password = db_password,
+            database = db_db_name
         )
         connection.autocommit = True
         with connection.cursor() as cursor:
@@ -61,6 +58,7 @@ def sendMemesDB(id, arr) -> None:
                     
     except Exception as _ex:
         print('[INFO] the error is', _ex)
+
 
 
 
