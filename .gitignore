@@ -1,6 +1,5 @@
 __pycache__
-__pycache__/ETLAndDB.cpython-38.pyc
-__pycache__/config.cpython-38.pyc
-__pycache__/postfromdb.cpython-38.pyc
-__pycache__/sqldb.cpython-38.pyc
-__pycache__/updData.cpython-38.pyc
+
+db_config.json
+telegram_access_token.json
+vk_token.json

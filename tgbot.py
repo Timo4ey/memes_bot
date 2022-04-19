@@ -2,6 +2,7 @@ import logging
 from postfromdb import MemesForHoursDB, sendMemesDB
 from datetime import datetime
 import updData
+import importlib
 
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup, Update
 from telegram.ext import Updater, CommandHandler, CallbackQueryHandler, CallbackContext,CallbackDataCache, dispatcher
@@ -68,7 +69,7 @@ def buttom(update: Update, context:CallbackContext) -> None:
          #   getting_image = requests.get(item[0])
          #   bot.send_photo(photo=getting_image.content,  chat_id=update.effective_chat.id, caption=item[1])
     elif query.data == 'Upd_Db':
-        exec('updData')
+        importlib.reload(updData)
         
         query.edit_message_text(text="Data's updating, repeat your requests in a few minutes")
     else:
