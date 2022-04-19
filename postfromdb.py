@@ -36,7 +36,7 @@ def MemesForHoursDB(hours = 6):
             SELECT pd.url, pd.text
             FROM post_db pd
             WHERE pd.content_id in (SELECT cb.content_id FROM content_db cb 
-					WHERE public_date > '{str(certain_time)}' and cb.content_id = pd.content_id)"""
+					WHERE public_date > '{str(certain_time)}')"""
 
             cursor.execute(postgres_insert)
             temp_list = cursor.fetchall()
@@ -60,7 +60,33 @@ def sendMemesDB(id, arr) -> None:
         print('[INFO] the error is', _ex)
 
 
+def RecentlyMemes(hours = 1):
+    temp_list = []
+    certain_time = datetime.strftime((datetime.today() - timedelta(hours=hours)), '%Y-%m-%d %H:%M:%S')
+    try:
+        connection = psycopg2.connect(
+            host = db_host,
+            user = db_user,
+            password = db_password,
+            database = db_db_name
+        )
+        connection.autocommit = True
+        with connection.cursor() as cursor:
+            postgres_insert = f"""
+            SELECT pd.url, pd.text
+            FROM post_db pd
+            WHERE pd.content_id in (SELECT cb.content_id FROM content_db cb 
+					WHERE save_date > '{str(certain_time)}')"""
 
+            cursor.execute(postgres_insert)
+            temp_list = cursor.fetchall()
+    except Exception as _ex:
+        print('[INFO] Got an error while working PostgreSQL', _ex)
+    finally:
+        if connection:
+            connection.close()
+            print('[INFO] The connection is closed')
+    return temp_list
 
 
 

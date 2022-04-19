@@ -1,5 +1,5 @@
 import logging
-from postfromdb import MemesForHoursDB, sendMemesDB
+from postfromdb import MemesForHoursDB, sendMemesDB, RecentlyMemes
 from datetime import datetime
 import updData
 import importlib
@@ -20,9 +20,6 @@ try:
     updates = bot.get_updates()
 except Exception as _ex:
     print('[INFO] while updating the bot has been gotten an error:')
-
-
-# Getting token
 
 
 
@@ -59,15 +56,18 @@ def buttom(update: Update, context:CallbackContext) -> None:
 
     query.answer()
     if query.data != 'Upd_Db':
-        #for x in MemesForHours_DB():
-        #query.edit_message_media(media = telegram.InputMediaPhoto(a,caption='Yuuu')) #
-        if len(MemesForHoursDB(int(query.data))) > 0:
+
+
+        if len(MemesForHoursDB(int(query.data))) > 0 and query.data != "1":
             sendMemesDB(update.effective_chat.id, MemesForHoursDB(int(query.data)))
+            print(f"Sending memes for {query.data}")
+        elif query.data == '1':
+            sendMemesDB(update.effective_chat.id, RecentlyMemes())
+            print("Sending recent memes")
         else:
             query.edit_message_text(text="Sorry, we don't have memes for this period. Choose other option or try later.")
-         #for item in MemesForHours_DB(12):
-         #   getting_image = requests.get(item[0])
-         #   bot.send_photo(photo=getting_image.content,  chat_id=update.effective_chat.id, caption=item[1])
+
+
     elif query.data == 'Upd_Db':
         importlib.reload(updData)
         
