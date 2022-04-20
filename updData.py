@@ -79,6 +79,7 @@ try:
     for_content_db = for_content_db.astype({'public_date':str, 'save_date':str})
     sendDataContentSQL(for_content_db)
     sendDataPostsSQL(for_post_db)
+    print("[INFO] Databases have been updated")
 except Exception as _ex:
     print("[INFO] You don't have a new data", _ex)
 

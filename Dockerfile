@@ -1,12 +1,14 @@
-FROM python:3.10.4
+# syntax=docker/dockerfile:1
 
-WORKDIR /the/workdir/path
+FROM python:3.8-slim-buster
 
-COPY config.txt ./
+WORKDIR /code/memes_tg
 
-RUN pip install --no-cache-dir -r config.txt
+COPY requirements.txt requirements.txt
+
+RUN pip3 install -r requirements.txt
 
 COPY . .
 
 
-CMD [ "python", './tgbot.py']
+CMD [ "python", '-m', './tgbot.py']

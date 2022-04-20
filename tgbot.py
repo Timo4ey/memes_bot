@@ -61,6 +61,7 @@ def buttom(update: Update, context:CallbackContext) -> None:
         if len(MemesForHoursDB(int(query.data))) > 0 and query.data != "1":
             sendMemesDB(update.effective_chat.id, MemesForHoursDB(int(query.data)))
             print(f"Sending memes for {query.data}")
+
         elif query.data == '1':
             sendMemesDB(update.effective_chat.id, RecentlyMemes())
             print("Sending recent memes")
