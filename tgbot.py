@@ -87,7 +87,7 @@ def help_command(update: Update, context: CallbackContext) -> None:
 
 def main()->None:
     """Run the bot"""
-    updater = Updater(tg_access_token)
+    updater = Updater(tg_access_token, use_context=True)
     updater.dispatcher.add_handler(CommandHandler('start', start))
     updater.dispatcher.add_handler(CallbackQueryHandler(buttom))
     updater.dispatcher.add_handler(CommandHandler('help', help_command))
