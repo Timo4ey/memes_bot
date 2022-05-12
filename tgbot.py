@@ -1,11 +1,20 @@
 import logging
+from multiprocessing import allow_connection_pickling
+from socket import timeout
 from postfromdb import MemesForHoursDB, sendMemesDB, RecentlyMemes
 from datetime import datetime
 import updData
 import importlib
 
-from telegram import InlineKeyboardButton, InlineKeyboardMarkup, Update
-from telegram.ext import Updater, CommandHandler, CallbackQueryHandler, CallbackContext,CallbackDataCache, dispatcher
+from telegram import (
+    InlineKeyboardButton, 
+    InlineKeyboardMarkup, 
+    Update,)
+from telegram.ext import (
+    Updater, CommandHandler, 
+    CallbackQueryHandler, 
+    CallbackContext,CallbackDataCache, dispatcher,
+    )
 import telegram
 #--------------------------
 import json
@@ -17,7 +26,9 @@ from config import tg_access_token
 #telegram_bot_get_me = bot.get_me()
 bot = telegram.Bot(token = tg_access_token)
 try:
-    updates = bot.get_updates()
+    updates =  bot.getUpdates(allowed_updates = ['message'
+    , 'edited_channel_post', 'callback_query'
+    , 'send_photo'], timeout = 5)
 except Exception as _ex:
     print('[INFO] while updating the bot has been gotten an error:')
 
@@ -31,6 +42,7 @@ logger = logging.getLogger(__name__)
 
 
 def start(update: Update, context:CallbackContext) -> None:
+    
     """Sends a message with three inline buttons attached."""
     keyboard = [
         [
@@ -44,6 +56,10 @@ def start(update: Update, context:CallbackContext) -> None:
     ]
     reply_markup = InlineKeyboardMarkup(keyboard)
     update.message.reply_text('choose time slot:', reply_markup=reply_markup)
+    update.message.pin()
+
+def greet_user(update: Update, context: CallbackContext):
+    update.message.reply_text('hello')
 
 
 def buttom(update: Update, context:CallbackContext) -> None:
@@ -61,22 +77,28 @@ def buttom(update: Update, context:CallbackContext) -> None:
         if len(MemesForHoursDB(int(query.data))) > 0 and query.data != "1":
             sendMemesDB(update.effective_chat.id, MemesForHoursDB(int(query.data)))
             print(f"Sending memes for {query.data}")
+            bot.send_message(update.effective_chat.id,text=f"Memes for {query.data}")
 
         elif query.data == '1':
             sendMemesDB(update.effective_chat.id, RecentlyMemes())
-            print("Sending recent memes")
+            bot.send_message(update.effective_chat.id, text="Recent memes")
+
         else:
-            query.edit_message_text(text="Sorry, we don't have memes for this period. Choose other option or try later.")
+            bot.send_message(update.effective_chat.id,text="Sorry, we don't have memes for this period. Choose other option or try later.")
 
 
     elif query.data == 'Upd_Db':
         importlib.reload(updData)
+
         
-        query.edit_message_text(text="Data's updating, repeat your requests in a few minutes")
+        bot.send_message(update.effective_chat.id,text="Data's updating, repeat your requests in a few minutes")
     else:
-        query.edit_message_text(text=f'Fuck2: {query.data}, {update.effective_chat.id}')
+        bot.send_message(update.effective_chat.id,text=f'Fuck2: {query.data}, {update.effective_chat.id}')
     
 
+
+def error_callback(update: Update, context: CallbackContext):
+    logger.warning('Update "%s" caused error "%s"', update, context.error)
 
 def help_command(update: Update, context: CallbackContext) -> None:
     """Displays info on how to use the bot."""
@@ -91,6 +113,7 @@ def main()->None:
     updater.dispatcher.add_handler(CommandHandler('start', start))
     updater.dispatcher.add_handler(CallbackQueryHandler(buttom))
     updater.dispatcher.add_handler(CommandHandler('help', help_command))
+    
 
     # Start the Bot
     updater.start_polling()

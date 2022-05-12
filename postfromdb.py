@@ -4,6 +4,7 @@ from datetime import datetime, timedelta
 import requests
 import json
 
+
 from config import tg_access_token
 
 from time import sleep
@@ -45,7 +46,7 @@ def MemesForHoursDB(hours = 6):
     finally:
         if connection:
             connection.close()
-            print('[INFO] The connection is closed')
+            print('[INFO] The connection is closed, Func MemesForHoursDB has finished')
     return temp_list
 
 
@@ -53,7 +54,7 @@ def MemesForHoursDB(hours = 6):
 def sendMemesDB(id, arr) -> None:
     try:
         for item in arr:
-            getting_image = requests.get(item[0])
+            getting_image = requests.get(item[0], timeout=(10,200))
             bot.send_photo(photo=getting_image.content,  chat_id=id, caption=item[1])
                     
     except Exception as _ex:
@@ -75,8 +76,8 @@ def RecentlyMemes(hours = 1):
             postgres_insert = f"""
             SELECT pd.url, pd.text
             FROM post_db pd
-            WHERE pd.content_id in (SELECT cb.content_id FROM content_db cb 
-									WHERE save_date in (SELECT MAX(cb2.save_date) FROM content_db cb2) )"""
+            WHERE pd.content_id IN (SELECT cb.content_id FROM content_db cb 
+									WHERE save_date IN (SELECT MAX(cb2.save_date) FROM content_db cb2) )"""
 
             cursor.execute(postgres_insert)
             temp_list = cursor.fetchall()
@@ -85,5 +86,5 @@ def RecentlyMemes(hours = 1):
     finally:
         if connection:
             connection.close()
-            print('[INFO] The connection is closed')
+            print('[INFO] The connection is closed, Func RecentlyMemes has finished')
     return temp_list

@@ -30,7 +30,7 @@ def getIndexesFromMainDB() -> list:
     finally:
         if connection:
             connection.close()
-            print('[INFO] the connection is closed')
+            print('[INFO] the connection is closed, Func getIndexesFromMainDB has finished')
     return temp_list
 
 
@@ -59,7 +59,7 @@ def GetDataPostsSQL() -> list:
     finally:
         if connection:
             connection.close()
-            print('[INFO] connection is closed')
+            print('[INFO] connection is closed, Func  GetDataPostsSQL has finished')
     return temp_list
 
 
@@ -92,7 +92,7 @@ def sendDataContentSQL(arr) -> None:
     finally:
         if connection:
             connection.close()
-            print('[INFO] connection is closed')
+            print('[INFO] connection is closed, Func sendDataContentSQL has finished')
 
     
 def sendDataPostsSQL(arr) -> None:
@@ -124,4 +124,4 @@ def sendDataPostsSQL(arr) -> None:
     finally:
         if connection:
             connection.close()
-            print('[INFO] connection is closed')
+            print('[INFO] connection is closed, update DB has finished')
