@@ -3,5 +3,5 @@ __pycache__
 db_config.json
 telegram_access_token.json
 vk_token.json
-.env
+
 .env
