@@ -31,7 +31,7 @@ try:
     , 'edited_channel_post', 'callback_query'
     , 'send_photo'], timeout = 5)
 except Exception as _ex:
-    print('[INFO] while updating the bot has been gotten an error:')
+    print('[INFO] while updating the bot has been gotten an error:', _ex)
 
 
 
