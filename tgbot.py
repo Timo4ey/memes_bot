@@ -5,6 +5,7 @@ from postfromdb import MemesForHoursDB, sendMemesDB, RecentlyMemes
 from datetime import datetime
 import updData
 import importlib
+from dotenv import load_dotenv
 
 from telegram import (
     InlineKeyboardButton, 
