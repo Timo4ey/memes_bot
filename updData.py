@@ -6,8 +6,7 @@ from config import db_db_name, db_host, db_password, db_user
 #--------MY moduls
 from ETLAndDB import getVkJson # get data from VK
 from ETLAndDB import dateStamper, changeSignOwnerID,getPhotoMetaData,getAttachments,getPhotoID, getSizes, convert_asis, dateSTAMP, takeNewestPosts, currentDate
-from sqldb import DataBase_Con, GetDataPostsSQL, sendDataContentSQL, sendDataPostsSQL,getIndexesFromMainDB
-
+from sqldb import DataBase_Con
 
 connect_db = DataBase_Con(db_host,db_user,  db_password,  db_db_name)
 connect_db.connection_on()
@@ -81,13 +80,6 @@ try:
     print("[INFO] Databases have been updated")
 except Exception as _ex:
     print("[INFO] You don't have a new data", _ex)
-
-
-print('The end')
-
-
-
-
 
 
 
