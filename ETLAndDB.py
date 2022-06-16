@@ -20,6 +20,7 @@ def getVkJson(list_of_indexes) -> pd.DataFrame:
         req_wall = requests.get(url + method_wall, params = params_wall, allow_redirects=False)
         req_wall.close
         sleep(0.5)
+        print(req_wall.json())
         df = pd.concat([df, pd.DataFrame(req_wall.json()['response']['items'])])
 
     return df.reset_index()

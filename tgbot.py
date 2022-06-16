@@ -1,10 +1,9 @@
 import logging
-from multiprocessing import allow_connection_pickling
 from socket import timeout
 from postfromdb import MemesForHoursDB, sendMemesDB, RecentlyMemes
 from datetime import datetime
-import updData
-import importlib
+# import updData
+# import importlib
 from dotenv import load_dotenv
 
 from telegram import (
@@ -53,7 +52,6 @@ def start(update: Update, context:CallbackContext) -> None:
             InlineKeyboardButton('12h', callback_data='12'),
             InlineKeyboardButton('24h', callback_data='24')
         ],
-        [InlineKeyboardButton("Upd DB", callback_data='Upd_Db')]
     ]
     reply_markup = InlineKeyboardMarkup(keyboard)
     update.message.reply_text('choose time slot:', reply_markup=reply_markup)
@@ -88,8 +86,6 @@ def buttom(update: Update, context:CallbackContext) -> None:
             bot.send_message(update.effective_chat.id,text="Sorry, we don't have memes for this period. Choose other option or try later.")
 
 
-    elif query.data == 'Upd_Db':
-        importlib.reload(updData)
 
         
         bot.send_message(update.effective_chat.id,text="Data's updating, repeat your requests in a few minutes")
